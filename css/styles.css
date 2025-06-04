@@ -1,0 +1,267 @@
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .stat {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 120px;
+        }
+        .stat .number {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+        .stat .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .filtros {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        .filtros button {
+            padding: 12px 20px;
+            border: none;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+        .filtros button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+        .filtros button.active {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+        .busqueda {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .busqueda input {
+            width: 80%;
+            max-width: 500px;
+            padding: 15px 20px;
+            border-radius: 25px;
+            border: 2px solid #ecf0f1;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .busqueda input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        .modo-vista {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .modo-vista button {
+            margin: 0 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .modo-vista button.active {
+            background: linear-gradient(45deg, #27ae60, #229954);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .lista {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #3498db, #e74c3c);
+        }
+        .grid .card {
+            flex-direction: column;
+            text-align: center;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-color: #3498db;
+        }
+        .card img {
+            width: 56px;
+            height: 56px;
+            border-radius: 10px;
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .card p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+        .card .tipo-badge {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 500;
+            margin: 5px 0;
+            display: inline-block;
+        }
+        .card .herramienta-badge {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 500;
+            margin: 5px 0;
+            display: inline-block;
+        }
+        .card a {
+            margin-top: 15px;
+            display: inline-block;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9em;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .card a:hover {
+            background: linear-gradient(45deg, #2980b9, #1f4e79);
+            transform: scale(1.05);
+        }
+        .info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .no-results {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin: 50px 0;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        .no-results img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        .popularidad {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        .star {
+            color: #f39c12;
+            font-size: 0.9em;
+        }
+        .rating {
+            font-size: 0.8em;
+            color: #7f8c8d;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .stats {
+                gap: 15px;
+            }
+            .stat {
+                min-width: 100px;
+                padding: 10px 15px;
+            }
+            .busqueda input {
+                width: 95%;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Servicios Autogestionados</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Portal de Servicios TI</h1>
+        <p class="subtitle">Accede a todos los servicios autogestionados de tecnología</p>
+
+        <div class="stats">
+            <div class="stat">
+                <span class="number" id="total-servicios">0</span>
+                <span class="label">Servicios</span>
+            </div>
+            <div class="stat">
+                <span class="number" id="servicios-mostrados">0</span>
+                <span class="label">Mostrados</span>
+            </div>
+            <div class="stat">
+                <span class="number">24/7</span>
+                <span class="label">Disponible</span>
+            </div>
+        </div>
+
+        <div class="filtros">
+            <button onclick="filtrar('todos')" class="active">🌟 Todos</button>
+            <button onclick="filtrar('Asesorias')">💬 Asesorías</button>
+            <button onclick="filtrar('Automatizaciones')">🤖 Automatizaciones</button>
+            <button onclick="filtrar('Solicitudes')">📋 Solicitudes</button>
+            <button onclick="filtrar('Productos y Servicios')">🛒 Productos</button>
+            <button onclick="filtrar('Azure DevOps')">⚙️ Azure DevOps</button>
+            <button onclick="filtrar('SharePoint')">📂 SharePoint</button>
+            <button onclick="filtrar('Power Platform')">⚡ Power Platform</button>
+            <button onclick="filtrar('Office 365')">📧 Office 365</button>
+        </div>
+
+        <div class="busqueda">
+            <input type="text" id="buscador" placeholder="🔍 Buscar servicios por nombre, propósito o herramienta..." oninput="buscar()">
+        </div>
+
+        <div class="modo-vista">
+            <button onclick="cambiarVista('grid')" class="active">📊 Vista Cuadrícula</button>
+            <button onclick="cambiarVista('lista')">📋 Vista Lista</button>
+        </div>
+
+        <div id="contenedor" class="grid"></div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
