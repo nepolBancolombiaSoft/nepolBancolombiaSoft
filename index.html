@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal de Servicios Autogestionados</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -39,7 +42,8 @@
         </div>
 
         <div class="busqueda">
-            <input type="text" id="buscador" placeholder="🔍 Buscar servicios por nombre, propósito o herramienta... puedes ingresar varias palabras" oninput="buscar()">
+            <input type="text" id="buscador" placeholder="Buscar servicios..." oninput="buscar()">
+            <button id="clear-search" class="clear-search" onclick="limpiarBusqueda()">✖</button>
         </div>
 
         <div class="modo-vista">
@@ -48,6 +52,7 @@
         </div>
 
         <div id="contenedor" class="grid"></div>
+        <div id="paginacion" class="paginacion"></div>
     </div>
 
     <script src="js/data.js"></script>

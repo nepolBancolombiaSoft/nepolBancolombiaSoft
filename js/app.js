@@ -2,7 +2,10 @@ let vistaActual = 'grid';
         const contenedor = document.getElementById('contenedor');
         const botones = document.querySelectorAll('.filtros button');
         const botonesVista = document.querySelectorAll('.modo-vista button');
+        const paginacionContenedor = document.getElementById('paginacion');
         let filtroActual = 'todos';
+        let paginaActual = 1;
+        const itemsPorPagina = 8;
 
         function normalizar(texto) {
             return texto
@@ -27,9 +30,8 @@ let vistaActual = 'grid';
             contenedor.innerHTML = '';
             contenedor.className = vistaActual;
 
-            let serviciosMostrados = 0;
-
             const palabrasBusqueda = normalizar(textoBusqueda).split(/\s+/).filter(Boolean);
+            const resultados = [];
 
             datos.forEach(servicio => {
                 const coincideFiltro = filtro === 'todos' || servicio.tipo === filtro || servicio.herramienta === filtro;
@@ -45,32 +47,43 @@ let vistaActual = 'grid';
                 );
 
                 if (coincideFiltro && coincideBusqueda) {
-                    serviciosMostrados++;
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    const icono = iconos[servicio.herramienta] || iconos[servicio.tipo] || 'https://img.icons8.com/fluency/48/service.png';
-                    
-                    const estrellas = '★'.repeat(Math.floor(servicio.popularidad)) + '☆'.repeat(5 - Math.floor(servicio.popularidad));
-                    
-                    card.innerHTML = `
-                        <img src="${icono}" alt="icon">
-                        <div class="info">
-                            <h3>${resaltar(servicio.nombre, palabrasBusqueda)}</h3>
-                            <span class="tipo-badge">${servicio.tipo}</span>
-                            <span class="herramienta-badge">${servicio.herramienta}</span>
-                            <p>${resaltar(servicio.proposito, palabrasBusqueda)}</p>
-                            <div class="popularidad">
-                                <span class="star">${estrellas}</span>
-                                <span class="rating">(${servicio.popularidad}/5)</span>
-                            </div>
-                            <a href="${servicio.link}" target="_blank">🚀 Acceder al Servicio</a>
-                        </div>
-                    `;
-                    contenedor.appendChild(card);
+                    resultados.push(servicio);
                 }
             });
 
-            if (serviciosMostrados === 0) {
+            const totalPaginas = Math.ceil(resultados.length / itemsPorPagina) || 1;
+            if (paginaActual > totalPaginas) paginaActual = 1;
+
+            const inicio = (paginaActual - 1) * itemsPorPagina;
+            const fin = inicio + itemsPorPagina;
+
+            const paginaResultados = resultados.slice(inicio, fin);
+
+            paginaResultados.forEach(servicio => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                const icono = iconos[servicio.herramienta] || iconos[servicio.tipo] || 'https://img.icons8.com/fluency/48/service.png';
+
+                const estrellas = '★'.repeat(Math.floor(servicio.popularidad)) + '☆'.repeat(5 - Math.floor(servicio.popularidad));
+
+                card.innerHTML = `
+                    <img src="${icono}" alt="icon">
+                    <div class="info">
+                        <h3>${resaltar(servicio.nombre, palabrasBusqueda)}</h3>
+                        <span class="tipo-badge">${servicio.tipo}</span>
+                        <span class="herramienta-badge">${servicio.herramienta}</span>
+                        <p>${resaltar(servicio.proposito, palabrasBusqueda)}</p>
+                        <div class="popularidad">
+                            <span class="star">${estrellas}</span>
+                            <span class="rating">(${servicio.popularidad}/5)</span>
+                        </div>
+                        <a href="${servicio.link}" target="_blank">🚀 Acceder al Servicio</a>
+                    </div>
+                `;
+                contenedor.appendChild(card);
+            });
+
+            if (resultados.length === 0) {
                 contenedor.innerHTML = `
                     <div class="no-results">
                         <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f50d.svg" alt="No results">
@@ -80,13 +93,15 @@ let vistaActual = 'grid';
                 `;
             }
 
-            actualizarEstadisticas(serviciosMostrados);
+            actualizarEstadisticas(resultados.length);
+            actualizarPaginacion(totalPaginas);
         }
 
         function cambiarVista(vista) {
             vistaActual = vista;
             botonesVista.forEach(btn => btn.classList.remove('active'));
             document.querySelector(`.modo-vista button[onclick*="${vista}"]`).classList.add('active');
+            paginaActual = 1;
             renderCards(filtroActual, document.getElementById('buscador').value);
         }
 
@@ -94,11 +109,44 @@ let vistaActual = 'grid';
             filtroActual = filtro;
             botones.forEach(btn => btn.classList.remove('active'));
             document.querySelector(`.filtros button[onclick*="${filtro}"]`).classList.add('active');
+            paginaActual = 1;
             renderCards(filtro, document.getElementById('buscador').value);
         }
 
         function buscar() {
+            paginaActual = 1;
             renderCards(filtroActual, document.getElementById('buscador').value);
+        }
+
+        function limpiarBusqueda() {
+            document.getElementById('buscador').value = '';
+            paginaActual = 1;
+            renderCards(filtroActual, '');
+        }
+
+        function actualizarPaginacion(totalPaginas) {
+            paginacionContenedor.innerHTML = '';
+            if (totalPaginas <= 1) return;
+
+            const prev = document.createElement('button');
+            prev.textContent = 'Anterior';
+            prev.disabled = paginaActual === 1;
+            prev.onclick = () => { paginaActual--; renderCards(filtroActual, document.getElementById('buscador').value); };
+            paginacionContenedor.appendChild(prev);
+
+            for (let i = 1; i <= totalPaginas; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                if (i === paginaActual) btn.classList.add('active');
+                btn.onclick = () => { paginaActual = i; renderCards(filtroActual, document.getElementById('buscador').value); };
+                paginacionContenedor.appendChild(btn);
+            }
+
+            const next = document.createElement('button');
+            next.textContent = 'Siguiente';
+            next.disabled = paginaActual === totalPaginas;
+            next.onclick = () => { paginaActual++; renderCards(filtroActual, document.getElementById('buscador').value); };
+            paginacionContenedor.appendChild(next);
         }
 
         // Inicializar
