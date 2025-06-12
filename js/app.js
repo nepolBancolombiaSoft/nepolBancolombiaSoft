@@ -15,11 +15,15 @@ let vistaActual = 'grid';
             
             let serviciosMostrados = 0;
             
+            const palabrasBusqueda = textoBusqueda.toLowerCase().split(/\s+/).filter(Boolean);
+
             datos.forEach(servicio => {
                 const coincideFiltro = filtro === 'todos' || servicio.tipo === filtro || servicio.herramienta === filtro;
-                const coincideBusqueda = servicio.nombre.toLowerCase().includes(textoBusqueda.toLowerCase()) || 
-                                      servicio.proposito.toLowerCase().includes(textoBusqueda.toLowerCase()) ||
-                                      servicio.herramienta.toLowerCase().includes(textoBusqueda.toLowerCase());
+                const coincideBusqueda = palabrasBusqueda.length === 0 || palabrasBusqueda.some(palabra =>
+                    servicio.nombre.toLowerCase().includes(palabra) ||
+                    servicio.proposito.toLowerCase().includes(palabra) ||
+                    servicio.herramienta.toLowerCase().includes(palabra)
+                );
                 
                 if (coincideFiltro && coincideBusqueda) {
                     serviciosMostrados++;
