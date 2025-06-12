@@ -1,18 +1,18 @@
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', Arial, sans-serif;
             padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
             margin: 0;
             min-height: 100vh;
         }
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            padding: 40px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 25px 45px rgba(0,0,0,0.2);
         }
         h1 {
             text-align: center;
@@ -61,30 +61,31 @@
         .filtros button {
             padding: 12px 20px;
             border: none;
-            background: linear-gradient(45deg, #3498db, #2980b9);
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
             color: white;
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
-            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
         }
         .filtros button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
         }
         .filtros button.active {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+            background: linear-gradient(45deg, #e67e22, #d35400);
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
         }
         .busqueda {
+            position: relative;
             text-align: center;
             margin-bottom: 20px;
         }
         .busqueda input {
             width: 80%;
             max-width: 500px;
-            padding: 15px 20px;
+            padding: 15px 45px 15px 20px;
             border-radius: 25px;
             border: 2px solid #ecf0f1;
             font-size: 1em;
@@ -93,7 +94,19 @@
         }
         .busqueda input:focus {
             outline: none;
-            border-color: #3498db;
+            border-color: #2ecc71;
+        }
+        .clear-search {
+            position: absolute;
+            right: calc(10% + 10px);
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: #7f8c8d;
+        }
         }
         .modo-vista {
             text-align: center;
@@ -104,13 +117,13 @@
             padding: 10px 20px;
             border: none;
             border-radius: 20px;
-            background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+            background: linear-gradient(45deg, #bdc3c7, #95a5a6);
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         .modo-vista button.active {
-            background: linear-gradient(45deg, #27ae60, #229954);
+            background: linear-gradient(45deg, #2980b9, #1e5799);
         }
         .grid {
             display: grid;
@@ -242,6 +255,29 @@
         .rating {
             font-size: 0.8em;
             color: #7f8c8d;
+        }
+
+        .paginacion {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+        }
+        .paginacion button {
+            border: none;
+            background: linear-gradient(45deg, #bdc3c7, #95a5a6);
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .paginacion button.active {
+            background: linear-gradient(45deg, #2980b9, #1e5799);
+        }
+        .paginacion button:disabled {
+            opacity: 0.5;
+            cursor: default;
         }
 
         mark {
