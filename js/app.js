@@ -4,6 +4,20 @@ let vistaActual = 'grid';
         const botonesVista = document.querySelectorAll('.modo-vista button');
         let filtroActual = 'todos';
 
+        function normalizar(texto) {
+            return texto
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[^\w\s]/g, '')
+                .replace(/[\u0300-\u036f]/g, '');
+        }
+
+        function resaltar(texto, palabras) {
+            if (palabras.length === 0) return texto;
+            const regex = new RegExp('(' + palabras.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'gi');
+            return texto.replace(regex, '<mark>$1</mark>');
+        }
+
         function actualizarEstadisticas(serviciosMostrados) {
             document.getElementById('total-servicios').textContent = datos.length;
             document.getElementById('servicios-mostrados').textContent = serviciosMostrados;
@@ -12,19 +26,24 @@ let vistaActual = 'grid';
         function renderCards(filtro, textoBusqueda = '') {
             contenedor.innerHTML = '';
             contenedor.className = vistaActual;
-            
+
             let serviciosMostrados = 0;
-            
-            const palabrasBusqueda = textoBusqueda.toLowerCase().split(/\s+/).filter(Boolean);
+
+            const palabrasBusqueda = normalizar(textoBusqueda).split(/\s+/).filter(Boolean);
 
             datos.forEach(servicio => {
                 const coincideFiltro = filtro === 'todos' || servicio.tipo === filtro || servicio.herramienta === filtro;
+
+                const nombreNorm = normalizar(servicio.nombre);
+                const propositoNorm = normalizar(servicio.proposito);
+                const herramientaNorm = normalizar(servicio.herramienta);
+
                 const coincideBusqueda = palabrasBusqueda.length === 0 || palabrasBusqueda.some(palabra =>
-                    servicio.nombre.toLowerCase().includes(palabra) ||
-                    servicio.proposito.toLowerCase().includes(palabra) ||
-                    servicio.herramienta.toLowerCase().includes(palabra)
+                    nombreNorm.includes(palabra) ||
+                    propositoNorm.includes(palabra) ||
+                    herramientaNorm.includes(palabra)
                 );
-                
+
                 if (coincideFiltro && coincideBusqueda) {
                     serviciosMostrados++;
                     const card = document.createElement('div');
@@ -36,10 +55,10 @@ let vistaActual = 'grid';
                     card.innerHTML = `
                         <img src="${icono}" alt="icon">
                         <div class="info">
-                            <h3>${servicio.nombre}</h3>
+                            <h3>${resaltar(servicio.nombre, palabrasBusqueda)}</h3>
                             <span class="tipo-badge">${servicio.tipo}</span>
                             <span class="herramienta-badge">${servicio.herramienta}</span>
-                            <p>${servicio.proposito}</p>
+                            <p>${resaltar(servicio.proposito, palabrasBusqueda)}</p>
                             <div class="popularidad">
                                 <span class="star">${estrellas}</span>
                                 <span class="rating">(${servicio.popularidad}/5)</span>

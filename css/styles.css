@@ -243,6 +243,12 @@
             font-size: 0.8em;
             color: #7f8c8d;
         }
+
+        mark {
+            background-color: #fff59d;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
